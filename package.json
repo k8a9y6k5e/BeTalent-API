@@ -1,0 +1,25 @@
+{
+  "name": "betalent-processo-seletivo",
+  "version": "1.0.0",
+  "description": "",
+  "homepage": "https://github.com/k8a9y6k5e/BeTalent-selection-process#readme",
+  "bugs": {
+    "url": "https://github.com/k8a9y6k5e/BeTalent-selection-process/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/k8a9y6k5e/BeTalent-selection-process.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "module",
+  "main": "index.ts",
+  "scripts": {
+    "test": "start"
+  },
+  "devDependencies": {
+    "@types/node": "^25.4.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  }
+}
