@@ -1,8 +1,7 @@
 // import { middleware } from '#start/kernel'
 import router from '@adonisjs/core/services/router'
-import { controllers } from '#generated/controllers'
+// import { controllers } from '#generated/controllers'
+import { UsersController } from '#controllers/users_controller'
 
 //for users
-router.group(() => {
-  router.post('/login', controllers.Users)
-})
+router.post('/login', new UsersController().login)

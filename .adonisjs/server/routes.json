@@ -1,1 +1,1 @@
-{}
+{"root":[{"domain":"root","pattern":"/login","matchers":{},"tokens":[{"old":"/login","type":0,"val":"login","end":""}],"meta":{"params":[]},"methods":["POST"],"middleware":{}}]}
