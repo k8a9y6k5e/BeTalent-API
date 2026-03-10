@@ -3,6 +3,7 @@
   "compilerOptions": {
     "types": ["@adonisjs/core"],
     "rootDir": "./",
-    "outDir": "./build"
+    "outDir": "./build",
+    "isolatedModules": false
   }
 }
