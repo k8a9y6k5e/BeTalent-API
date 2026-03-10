@@ -55,7 +55,14 @@ export class ProductSchema extends BaseModel {
 }
 
 export class TransactionProductSchema extends BaseModel {
-  static $columns = ['createdAt', 'id', 'productId', 'quantity', 'transactionId', 'updatedAt'] as const
+  static $columns = [
+    'createdAt',
+    'id',
+    'productId',
+    'quantity',
+    'transactionId',
+    'updatedAt',
+  ] as const
   $columns = TransactionProductSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -72,7 +79,19 @@ export class TransactionProductSchema extends BaseModel {
 }
 
 export class TransactionSchema extends BaseModel {
-  static $columns = ['amount', 'cardLastNumbers', 'clientId', 'createdAt', 'externalId', 'gatewayId', 'id', 'productId', 'quantity', 'status', 'updatedAt'] as const
+  static $columns = [
+    'amount',
+    'cardLastNumbers',
+    'clientId',
+    'createdAt',
+    'externalId',
+    'gatewayId',
+    'id',
+    'productId',
+    'quantity',
+    'status',
+    'updatedAt',
+  ] as const
   $columns = TransactionSchema.$columns
   @column()
   declare amount: number | null
@@ -99,7 +118,7 @@ export class TransactionSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'id', 'password', 'role', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'id', 'role', 'token', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -107,10 +126,10 @@ export class UserSchema extends BaseModel {
   declare email: string
   @column({ isPrimary: true })
   declare id: number
-  @column({ serializeAs: null })
-  declare password: string
   @column()
   declare role: string | null
+  @column()
+  declare token: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }
