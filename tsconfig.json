@@ -1,8 +1,13 @@
 {
   "extends": "@adonisjs/tsconfig/tsconfig.app.json",
   "compilerOptions": {
+    "types": ["@adonisjs/core"],
     "rootDir": "./",
     "jsx": "react",
-    "outDir": "./build"
+    "outDir": "./build",
+    "baseUrl": ".",
+    "paths": {
+      "@ioc:*": ["node_modules/@adonisjs/core/build/typings/*"]
+    }
   }
 }
