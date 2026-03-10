@@ -1,5 +1,5 @@
 {
-  "name": "BeTalent-selection-process",
+  "name": "betalent-selection-process",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -9,7 +9,7 @@
     "./registry": "./.adonisjs/client/registry/index.ts"
   },
   "scripts": {
-    "start": "node bin/server.js",
+    "start": "npx tsx bin/server.ts",
     "build": "node ace build",
     "dev": "node ace serve --hmr",
     "test": "node ace test",

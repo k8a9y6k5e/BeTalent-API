@@ -1,6 +1,5 @@
 import app from '@adonisjs/core/services/app'
 import { defineConfig } from '@adonisjs/lucid'
-import { Env } from '@adonisjs/env'
 
 const dbConfig = defineConfig({
   connection: 'mysql',

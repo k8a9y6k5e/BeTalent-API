@@ -3,11 +3,6 @@
   "compilerOptions": {
     "types": ["@adonisjs/core"],
     "rootDir": "./",
-    "jsx": "react",
-    "outDir": "./build",
-    "baseUrl": ".",
-    "paths": {
-      "@ioc:*": ["node_modules/@adonisjs/core/build/typings/*"]
-    }
+    "outDir": "./build"
   }
 }
