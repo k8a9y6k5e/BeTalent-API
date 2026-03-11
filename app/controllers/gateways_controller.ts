@@ -9,6 +9,15 @@ export default class GatewaysController {
 
     const data = await request.validateUsing(gatewaysValidator)
 
+    if (
+      data.is_active === undefined ||
+      data.priority === undefined ||
+      data.is_active === null ||
+      data.priority === null
+    ) {
+      return response.badRequest("Importants values to update doesn't exist")
+    }
+
     const gateway = await Gateways.findOrFail(id)
 
     gateway.is_active = data.is_active!
@@ -27,7 +36,7 @@ export default class GatewaysController {
 
     const gateway = await Gateways.findOrFail(id)
 
-    if (data.is_active !== undefined) {
+    if (data.is_active !== undefined && data.is_active !== null) {
       gateway.is_active = data.is_active!
     }
 
