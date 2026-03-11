@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Client from '#models/client'
 import { clientValidator } from '#validators/client'
+import { paginationValidator } from '#validators/pagination'
 
 export default class ClientsController {
   public async createClient({ request, response }: HttpContext) {
@@ -12,8 +13,7 @@ export default class ClientsController {
   }
 
   public async showClients({ request, response }: HttpContext) {
-    const page = request.input('page', 1)
-    const limit = request.input('limit', 10)
+    const { page = 1, limit = 10 } = await request.validateUsing(paginationValidator)
 
     const data = await Client.query().paginate(page, limit)
 
