@@ -1,7 +1,3 @@
 import vine from '@vinejs/vine'
 
-const id = () => vine.number().nonNegative()
-
-export const idValidator = vine.create({
-  id: id(),
-})
+export const paramValidator = vine.compile(vine.object({ id: vine.number().positive() }))
