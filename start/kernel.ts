@@ -9,3 +9,7 @@ router.use([
   () => import('@adonisjs/shield/shield_middleware'),
   () => import('@adonisjs/auth/initialize_auth_middleware'),
 ])
+
+export const middleware = router.named({
+  auth: () => import('#middleware/auth_middleware'),
+})
