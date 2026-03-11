@@ -1,0 +1,9 @@
+import vine from '@vinejs/vine'
+
+const isActive = () => vine.boolean().optional().nullable()
+const priority = () => vine.string().optional().nullable()
+
+export const gatewaysValidator = vine.create({
+  is_active: isActive(),
+  priority: priority(),
+})
