@@ -15,7 +15,7 @@ export default class ClientsController {
   public async showClients({ request, response }: HttpContext) {
     const { page = 1, limit = 10 } = await request.validateUsing(paginationValidator)
 
-    const data = await Client.query().paginate(page, limit)
+    const data = await Client.query().select('id', 'name', 'email').paginate(page, limit)
 
     response.ok(data)
   }

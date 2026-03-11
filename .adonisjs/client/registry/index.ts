@@ -30,6 +30,12 @@ const routes = {
     tokens: [{"old":"/client","type":0,"val":"client","end":""}],
     types: placeholder as Registry['clients.create_client']['types'],
   },
+  'clients.show_clients': {
+    methods: ["GET","HEAD"],
+    pattern: '/client',
+    tokens: [{"old":"/client","type":0,"val":"client","end":""}],
+    types: placeholder as Registry['clients.show_clients']['types'],
+  },
   'products.create_product': {
     methods: ["POST"],
     pattern: '/products',

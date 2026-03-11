@@ -20,6 +20,7 @@ router
 router
   .group(() => {
     router.post('/client', [controllers.Clients, 'createClient'])
+    router.get('/client', [controllers.Clients, 'showClients'])
   })
   .use(middleware.auth())
 

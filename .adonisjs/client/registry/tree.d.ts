@@ -11,6 +11,7 @@ export interface ApiDefinition {
   }
   clients: {
     createClient: typeof routes['clients.create_client']
+    showClients: typeof routes['clients.show_clients']
   }
   products: {
     createProduct: typeof routes['products.create_product']

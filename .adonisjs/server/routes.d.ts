@@ -8,6 +8,7 @@ export type ScannedRoutes = {
     'gateways.put_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'gateways.patch_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'clients.create_client': { paramsTuple?: []; params?: {} }
+    'clients.show_clients': { paramsTuple?: []; params?: {} }
     'products.create_product': { paramsTuple?: []; params?: {} }
   }
   POST: {
@@ -20,6 +21,12 @@ export type ScannedRoutes = {
   }
   PATCH: {
     'gateways.patch_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+  }
+  GET: {
+    'clients.show_clients': { paramsTuple?: []; params?: {} }
+  }
+  HEAD: {
+    'clients.show_clients': { paramsTuple?: []; params?: {} }
   }
 }
 declare module '@adonisjs/core/types/http' {
