@@ -19,4 +19,28 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['login']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'gateways.put_update': {
+    methods: ["PUT"]
+    pattern: '/gateway/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/gateway').gatewaysValidator)>|InferInput<(typeof import('#validators/id').paramValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/gateway').gatewaysValidator)>|InferInput<(typeof import('#validators/id').paramValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/gateways_controller').default['putUpdate']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/gateways_controller').default['putUpdate']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'gateways.patch_update': {
+    methods: ["PATCH"]
+    pattern: '/gateway/:id'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/gateway').gatewaysValidator)>|InferInput<(typeof import('#validators/id').paramValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/gateway').gatewaysValidator)>|InferInput<(typeof import('#validators/id').paramValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/gateways_controller').default['patchUpdate']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/gateways_controller').default['patchUpdate']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
 }

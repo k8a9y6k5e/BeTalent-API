@@ -7,4 +7,12 @@ import router from '@adonisjs/core/services/router'
 router.post('/login', [controllers.Users, 'login'])
 
 //for private routers
-router.group(() => {}).use(middleware.auth())
+router
+  .group(() => {
+    //gateways
+    router.group(() => {
+      router.put('/gateway/:id', [controllers.Gateways, 'putUpdate'])
+      router.patch('/gateway/:id', [controllers.Gateways, 'patchUpdate'])
+    })
+  })
+  .use(middleware.auth())

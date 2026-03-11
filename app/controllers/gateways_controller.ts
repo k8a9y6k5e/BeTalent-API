@@ -13,7 +13,7 @@ export default class GatewaysController {
 
     gateway.is_active = data.is_active!
 
-    gateway.priority = data.priority!
+    await _swapPriority(data.priority!, gateway)
 
     await gateway.save()
 
@@ -27,14 +27,27 @@ export default class GatewaysController {
 
     const gateway = await Gateways.findOrFail(id)
 
-    if (data.is_active !== undefined || data.is_active !== null) {
+    if (data.is_active !== undefined) {
       gateway.is_active = data.is_active!
     }
 
     if (data.priority) {
-      gateway.priority = data.priority
+      await _swapPriority(data.priority!, gateway)
     }
+
+    await gateway.save()
 
     return response.ok({ gateway })
   }
+}
+
+async function _swapPriority(priority: number, toUpdate: Gateways) {
+  const samePriority = await Gateways.findBy({ priority: priority })
+
+  if (samePriority) {
+    samePriority.priority = toUpdate.priority
+    await samePriority.save()
+  }
+
+  toUpdate.priority = priority
 }

@@ -4,5 +4,6 @@
  */
 
 export const controllers = {
+  Gateways: () => import('#controllers/gateways_controller'),
   Users: () => import('#controllers/users_controller'),
 }
