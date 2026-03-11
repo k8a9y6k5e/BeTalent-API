@@ -4,6 +4,7 @@
  */
 
 export const controllers = {
+  Clients: () => import('#controllers/clients_controller'),
   Gateways: () => import('#controllers/gateways_controller'),
   Users: () => import('#controllers/users_controller'),
 }

@@ -14,5 +14,10 @@ router
       router.put('/gateway/:id', [controllers.Gateways, 'putUpdate'])
       router.patch('/gateway/:id', [controllers.Gateways, 'patchUpdate'])
     })
+
+    //clients
+    router.group(() => {
+      router.post('/client', [controllers.Clients, 'createClient'])
+    })
   })
   .use(middleware.auth())

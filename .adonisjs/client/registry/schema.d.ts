@@ -43,4 +43,16 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/gateways_controller').default['patchUpdate']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'clients.create_client': {
+    methods: ["POST"]
+    pattern: '/client'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/client').clientValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/client').clientValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['createClient']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['createClient']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
 }

@@ -24,6 +24,12 @@ const routes = {
     tokens: [{"old":"/gateway/:id","type":0,"val":"gateway","end":""},{"old":"/gateway/:id","type":1,"val":"id","end":""}],
     types: placeholder as Registry['gateways.patch_update']['types'],
   },
+  'clients.create_client': {
+    methods: ["POST"],
+    pattern: '/client',
+    tokens: [{"old":"/client","type":0,"val":"client","end":""}],
+    types: placeholder as Registry['clients.create_client']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

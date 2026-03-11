@@ -9,4 +9,7 @@ export interface ApiDefinition {
     putUpdate: typeof routes['gateways.put_update']
     patchUpdate: typeof routes['gateways.patch_update']
   }
+  clients: {
+    createClient: typeof routes['clients.create_client']
+  }
 }

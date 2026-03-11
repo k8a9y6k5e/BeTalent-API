@@ -7,9 +7,11 @@ export type ScannedRoutes = {
     'users.login': { paramsTuple?: []; params?: {} }
     'gateways.put_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
     'gateways.patch_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
+    'clients.create_client': { paramsTuple?: []; params?: {} }
   }
   POST: {
     'users.login': { paramsTuple?: []; params?: {} }
+    'clients.create_client': { paramsTuple?: []; params?: {} }
   }
   PUT: {
     'gateways.put_update': { paramsTuple: [ParamValue]; params: {'id': ParamValue} }
