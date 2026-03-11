@@ -10,4 +10,13 @@ export default class ClientsController {
 
     response.created(data)
   }
+
+  public async showClients({ request, response }: HttpContext) {
+    const page = request.input('page', 1)
+    const limit = request.input('limit', 10)
+
+    const data = await Client.query().paginate(page, limit)
+
+    response.ok(data)
+  }
 }
