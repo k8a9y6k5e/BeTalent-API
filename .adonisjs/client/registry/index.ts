@@ -30,6 +30,12 @@ const routes = {
     tokens: [{"old":"/client","type":0,"val":"client","end":""}],
     types: placeholder as Registry['clients.create_client']['types'],
   },
+  'products.create_product': {
+    methods: ["POST"],
+    pattern: '/products',
+    tokens: [{"old":"/products","type":0,"val":"products","end":""}],
+    types: placeholder as Registry['products.create_product']['types'],
+  },
 } as const satisfies Record<string, AdonisEndpoint>
 
 export { routes }

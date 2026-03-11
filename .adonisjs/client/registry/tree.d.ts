@@ -12,4 +12,7 @@ export interface ApiDefinition {
   clients: {
     createClient: typeof routes['clients.create_client']
   }
+  products: {
+    createProduct: typeof routes['products.create_product']
+  }
 }

@@ -55,4 +55,16 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['createClient']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'products.create_product': {
+    methods: ["POST"]
+    pattern: '/products'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/product').productValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/product').productValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/products_controller').default['createProduct']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['createProduct']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
 }
