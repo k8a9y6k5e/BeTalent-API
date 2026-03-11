@@ -6,6 +6,8 @@ export default class ProductsController {
   public async createProduct({ request, response }: HttpContext) {
     const data = await request.validateUsing(productValidator)
 
+    data.amount *= 100
+
     await Product.create(data)
 
     response.created(data)
