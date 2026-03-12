@@ -14,7 +14,7 @@ export default class extends BaseSchema {
         .inTable('gateways')
         .onDelete('CASCADE')
       table.integer('external_id')
-      table.enum('status', ['pending', 'paid', 'failed', 'refunded'])
+      table.string('status')
       table.integer('amount')
       table.integer('card_last_numbers')
       table

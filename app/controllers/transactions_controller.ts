@@ -16,10 +16,12 @@ export default class TransactionsController {
 
     const amount = await Product.query().where('id', data.productId).select('amount').first()
 
+    const cardLastNumbers: number = Number(data.cardNumber.toString().slice(-4))
+
     await Transaction.create({
       clientId: data.clientId,
       amount: Number(amount),
-      cardLastNumbers: data.cardLastNumbers,
+      cardLastNumbers: cardLastNumbers,
       productId: data.productId,
       quantity: data.quantity,
     })
