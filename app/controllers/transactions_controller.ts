@@ -44,4 +44,18 @@ export default class TransactionsController {
 
     response.created('Transaction made')
   }
+
+  public async showTransactions({ response }: HttpContext) {
+    const data = await Transaction.query().select(
+      'id',
+      'clientId',
+      'status',
+      'amount',
+      'cardLastNumbers',
+      'productId',
+      'quantity'
+    )
+
+    response.ok(data)
+  }
 }

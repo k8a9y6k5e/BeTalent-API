@@ -6,6 +6,7 @@ import router from '@adonisjs/core/services/router'
 // - for user login
 router.post('/login', [controllers.Users, 'login'])
 
+// - to client/user make a create bought
 router.post('/purchases', [controllers.Transactions, 'createTransaction'])
 
 //for private routers
@@ -33,3 +34,5 @@ router
     router.post('/products', [controllers.Products, 'createProduct'])
   })
   .use(middleware.auth())
+
+// - purchases
