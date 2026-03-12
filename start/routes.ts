@@ -6,9 +6,11 @@ import router from '@adonisjs/core/services/router'
 // - for user login
 router.post('/login', [controllers.Users, 'login'])
 
+router.post('/purchases', [controllers.Transactions, 'createTransaction'])
+
 //for private routers
 
-//gateways
+// - gateways
 router
   .group(() => {
     router.put('/gateway/:id', [controllers.Gateways, 'putUpdate'])
@@ -16,7 +18,7 @@ router
   })
   .use(middleware.auth())
 
-//clients
+// - clients
 router
   .group(() => {
     router.post('/client', [controllers.Clients, 'createClient'])
@@ -24,14 +26,9 @@ router
   })
   .use(middleware.auth())
 
-//products
+// - products
 router
   .group(() => {
     router.post('/products', [controllers.Products, 'createProduct'])
   })
   .use(middleware.auth())
-
-// //products
-// router.group(() => {
-//  router.post('/products', [controllers.Products, 'createProduct'])
-// })
