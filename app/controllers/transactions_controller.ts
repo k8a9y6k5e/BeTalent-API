@@ -5,6 +5,7 @@ import Client from '#models/client'
 import Product from '#models/product'
 import { GatewayService } from '#services/gateway_service'
 import { paginationValidator } from '#validators/pagination'
+import { paramValidator } from '#validators/id'
 
 export default class TransactionsController {
   public async createTransaction({ request, response }: HttpContext) {
@@ -52,6 +53,28 @@ export default class TransactionsController {
     const data = await Transaction.query()
       .select('id', 'clientId', 'status', 'amount', 'cardLastNumbers', 'productId', 'quantity')
       .paginate(page, limit)
+
+    response.ok(data)
+  }
+
+  public async detailedTransaction({ request, response }: HttpContext) {
+    const { id } = await request.validateUsing(paramValidator)
+
+    const data = await Transaction.query()
+      .where('id', id)
+      .preload('client')
+      .preload('gateway', (query) => query.select('name'))
+      .preload('product')
+      .select(
+        'status',
+        'amount',
+        'cardLastNumbers',
+        'quantity',
+        'clientId',
+        'gatewayId',
+        'productId'
+      )
+      .firstOrFail()
 
     response.ok(data)
   }
