@@ -3,6 +3,7 @@ import { transactionValidator } from '#validators/transaction'
 import Transaction from '#models/transaction'
 import Client from '#models/client'
 import Product from '#models/product'
+import { GatewayService } from '#services/gateway_service'
 
 export default class TransactionsController {
   public async createTransaction({ request, response }: HttpContext) {
@@ -14,13 +15,28 @@ export default class TransactionsController {
     if (!(await Client.query().where('id', data.clientId)))
       response.badRequest("Client entered doesn't exist")
 
-    const amount = await Product.query().where('id', data.productId).select('amount').first()
+    const amount = Number(
+      await Product.query().where('id', data.productId).select('amount').firstOrFail()
+    )
 
     const cardLastNumbers: number = Number(data.cardNumber.toString().slice(-4))
 
+    const chargeData = {
+      name: String(await Client.query().where('id', data.clientId).select('name').firstOrFail()),
+      amount: amount,
+      email: String(await Client.query().where('id', data.clientId).select('email').firstOrFail()),
+      cardNumber: data.cardNumber,
+      cvv: data.cvv,
+    }
+
+    const gatewayResult = await new GatewayService().charge(chargeData)
+
     await Transaction.create({
       clientId: data.clientId,
-      amount: Number(amount),
+      gatewayId: gatewayResult.gatewayId,
+      externalId: gatewayResult.externalId,
+      status: gatewayResult.status,
+      amount: amount,
       cardLastNumbers: cardLastNumbers,
       productId: data.productId,
       quantity: data.quantity,
