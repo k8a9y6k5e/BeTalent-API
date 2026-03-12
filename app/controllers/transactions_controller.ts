@@ -24,7 +24,7 @@ export default class TransactionsController {
 
     const chargeData = {
       name: String(await Client.query().where('id', data.clientId).select('name').firstOrFail()),
-      amount: amount,
+      amount: amount * data.quantity,
       email: String(await Client.query().where('id', data.clientId).select('email').firstOrFail()),
       cardNumber: data.cardNumber,
       cvv: data.cvv,
