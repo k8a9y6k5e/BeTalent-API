@@ -39,5 +39,6 @@ router
 router
   .group(() => {
     router.get('/purchases', [controllers.Transactions, 'showTransactions'])
+    router.get('/purchases/:id', [controllers.Transactions, 'detailedTransaction'])
   })
   .use(middleware.auth())
