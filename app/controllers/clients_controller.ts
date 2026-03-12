@@ -2,6 +2,7 @@ import type { HttpContext } from '@adonisjs/core/http'
 import Client from '#models/client'
 import { clientValidator } from '#validators/client'
 import { paginationValidator } from '#validators/pagination'
+import { paramValidator } from '#validators/id'
 
 export default class ClientsController {
   public async createClient({ request, response }: HttpContext) {
@@ -16,6 +17,14 @@ export default class ClientsController {
     const { page = 1, limit = 10 } = await request.validateUsing(paginationValidator)
 
     const data = await Client.query().select('id', 'name', 'email').paginate(page, limit)
+
+    response.ok(data)
+  }
+
+  public async showClientsAndTransactions({ request, response }: HttpContext) {
+    const { id } = await request.validateUsing(paramValidator)
+
+    const data = await Client.query().where('id', id).preload('transactions').firstOrFail()
 
     response.ok(data)
   }
