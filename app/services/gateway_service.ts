@@ -15,7 +15,7 @@ export class GatewayService {
   }
 
   async charge(data: ChargeData): Promise<ChargeResult & { gatewayId: number }> {
-    const gateways = await Gateway.query().where('is_active', true).orderBy('priority', 'asc')
+    const gateways = await Gateway.query().where('isActive', true).orderBy('priority', 'asc')
 
     let lastError: Error | null = null
 
@@ -25,6 +25,25 @@ export class GatewayService {
         const result = await adapter.charge(data)
 
         return { ...result, gatewayId: gateway.id }
+      } catch (err) {
+        lastError = err
+      }
+    }
+
+    throw lastError ?? new Error('All gateways failed')
+  }
+
+  async refund(externalId: string) {
+    const gateways = await Gateway.query().where('isActive', true).orderBy('priority', 'asc')
+
+    let lastError: Error | null = null
+
+    for (const gateway of gateways) {
+      try {
+        const adapter = this.createAdapters(gateway.name)
+        await adapter.refund(externalId)
+
+        return null //just to come back if be correct
       } catch (err) {
         lastError = err
       }

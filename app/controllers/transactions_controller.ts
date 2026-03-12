@@ -78,4 +78,16 @@ export default class TransactionsController {
 
     response.ok(data)
   }
+
+  public async refundTransaction({ request, response }: HttpContext) {
+    const { id } = await request.validateUsing(paramValidator)
+
+    const externalId = String(
+      await Transaction.query().where('id', id).select('externalId').firstOrFail()
+    )
+
+    await new GatewayService().refund(externalId)
+
+    response.ok('Purchase refund')
+  }
 }
