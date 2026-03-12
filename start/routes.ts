@@ -36,3 +36,8 @@ router
   .use(middleware.auth())
 
 // - purchases
+router
+  .group(() => {
+    router.get('/purchases', [controllers.Transactions, 'showTransactions'])
+  })
+  .use(middleware.auth())
