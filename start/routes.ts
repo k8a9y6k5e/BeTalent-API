@@ -23,6 +23,7 @@ router
   .group(() => {
     router.post('/client', [controllers.Clients, 'createClient'])
     router.get('/client', [controllers.Clients, 'showClients'])
+    router.get('/client/:id', [controllers.Clients, 'showClientsAndTransactions'])
   })
   .use(middleware.auth())
 
