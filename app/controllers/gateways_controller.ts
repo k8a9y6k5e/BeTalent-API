@@ -20,7 +20,7 @@ export default class GatewaysController {
 
     const gateway = await Gateways.findOrFail(id)
 
-    gateway.is_active = data.is_active!
+    gateway.isActive = data.is_active!
 
     await _swapPriority(data.priority!, gateway)
 
@@ -37,7 +37,7 @@ export default class GatewaysController {
     const gateway = await Gateways.findOrFail(id)
 
     if (data.is_active !== undefined && data.is_active !== null) {
-      gateway.is_active = data.is_active!
+      gateway.isActive = data.is_active!
     }
 
     if (data.priority) {

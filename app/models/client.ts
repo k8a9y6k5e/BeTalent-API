@@ -13,8 +13,8 @@ export default class Client extends ClientSchema {
   declare email: string
 
   @column.dateTime({ autoCreate: true })
-  public created_at!: DateTime
+  declare createdAt: DateTime<boolean> | null
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
-  public updated_at!: DateTime
+  declare updatedAt: DateTime<boolean> | null
 }
