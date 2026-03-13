@@ -19,6 +19,18 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/users_controller').default['login']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'transactions.create_transaction': {
+    methods: ["POST"]
+    pattern: '/purchases'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/transaction').transactionValidator)>>
+      paramsTuple: []
+      params: {}
+      query: ExtractQuery<InferInput<(typeof import('#validators/transaction').transactionValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['createTransaction']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['createTransaction']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
   'gateways.put_update': {
     methods: ["PUT"]
     pattern: '/gateway/:id'
@@ -67,6 +79,18 @@ export interface Registry {
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['showClients']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
+  'clients.show_clients_and_transactions': {
+    methods: ["GET","HEAD"]
+    pattern: '/client/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/id').paramValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['showClientsAndTransactions']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/clients_controller').default['showClientsAndTransactions']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
   'products.create_product': {
     methods: ["POST"]
     pattern: '/products'
@@ -77,6 +101,42 @@ export interface Registry {
       query: ExtractQuery<InferInput<(typeof import('#validators/product').productValidator)>>
       response: ExtractResponse<Awaited<ReturnType<import('#controllers/products_controller').default['createProduct']>>>
       errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/products_controller').default['createProduct']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'transactions.show_transactions': {
+    methods: ["GET","HEAD"]
+    pattern: '/purchases'
+    types: {
+      body: {}
+      paramsTuple: []
+      params: {}
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/pagination').paginationValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['showTransactions']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['showTransactions']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'transactions.detailed_transaction': {
+    methods: ["GET","HEAD"]
+    pattern: '/purchases/:id'
+    types: {
+      body: {}
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQueryForGet<InferInput<(typeof import('#validators/id').paramValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['detailedTransaction']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['detailedTransaction']>>> | { status: 422; response: { errors: SimpleError[] } }
+    }
+  }
+  'transactions.refund_transaction': {
+    methods: ["POST"]
+    pattern: '/purchases/:id/refunc'
+    types: {
+      body: ExtractBody<InferInput<(typeof import('#validators/id').paramValidator)>>
+      paramsTuple: [ParamValue]
+      params: { id: ParamValue }
+      query: ExtractQuery<InferInput<(typeof import('#validators/id').paramValidator)>>
+      response: ExtractResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['refundTransaction']>>>
+      errorResponse: ExtractErrorResponse<Awaited<ReturnType<import('#controllers/transactions_controller').default['refundTransaction']>>> | { status: 422; response: { errors: SimpleError[] } }
     }
   }
 }

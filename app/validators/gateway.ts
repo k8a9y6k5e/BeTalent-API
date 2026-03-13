@@ -5,7 +5,7 @@ const priority = () => vine.number().optional().nullable()
 
 export const gatewaysValidator = vine.compile(
   vine.object({
-    is_active: isActive(),
+    isActive: isActive(),
     priority: priority(),
   })
 )
