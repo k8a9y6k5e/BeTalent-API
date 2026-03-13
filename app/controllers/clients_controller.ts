@@ -24,8 +24,8 @@ export default class ClientsController {
     response.ok(data)
   }
 
-  public async showClientsAndTransactions({ request, response }: HttpContext) {
-    const { id } = await request.validateUsing(paramValidator)
+  public async showClientsAndTransactions({ params, response }: HttpContext) {
+    const { id } = await paramValidator.validate(params)
 
     const data = await Client.query().where('id', id).preload('transactions').firstOrFail()
 
