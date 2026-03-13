@@ -1,8 +1,8 @@
 import { TransactionSchema } from '#database/schema'
-import { column, hasMany } from '@adonisjs/lucid/orm'
+import { column, belongsTo } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 import Client from './client.ts'
-import { HasMany } from '@adonisjs/lucid/types/relations'
+import { BelongsTo } from '@adonisjs/lucid/types/relations'
 import Gateway from './gateway.ts'
 import Product from './product.ts'
 
@@ -13,14 +13,14 @@ export default class Transaction extends TransactionSchema {
   @column()
   declare clientId: number | null
 
-  @hasMany(() => Client)
-  declare client: HasMany<typeof Client>
+  @belongsTo(() => Client)
+  declare client: BelongsTo<typeof Client>
 
   @column()
   declare gatewayId: number | null
 
-  @hasMany(() => Gateway)
-  declare gateway: HasMany<typeof Gateway>
+  @belongsTo(() => Gateway)
+  declare gateway: BelongsTo<typeof Gateway>
 
   @column()
   declare externalId: string | null
@@ -37,8 +37,8 @@ export default class Transaction extends TransactionSchema {
   @column()
   declare productId: number | null
 
-  @hasMany(() => Product)
-  declare product: HasMany<typeof Product>
+  @belongsTo(() => Product)
+  declare product: BelongsTo<typeof Product>
 
   @column()
   declare quantity: number | null

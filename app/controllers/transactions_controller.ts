@@ -91,8 +91,8 @@ export default class TransactionsController {
     response.ok(data)
   }
 
-  public async detailedTransaction({ request, response }: HttpContext) {
-    const { id } = await request.validateUsing(paramValidator)
+  public async detailedTransaction({ params, response }: HttpContext) {
+    const { id } = await paramValidator.validate(params)
 
     const data = await Transaction.query()
       .where('id', id)
@@ -113,14 +113,16 @@ export default class TransactionsController {
     response.ok(data)
   }
 
-  public async refundTransaction({ request, response }: HttpContext) {
-    const { id } = await request.validateUsing(paramValidator)
+  public async refundTransaction({ params, response }: HttpContext) {
+    const { id } = await paramValidator.validate(params)
 
-    const externalId = String(
-      await Transaction.query().where('id', id).select('externalId').firstOrFail()
-    )
+    const informations = await Transaction.query()
+      .where('id', id)
+      .select('externalId')
+      .pojo<{ externalId: string }>()
+      .firstOrFail()
 
-    await new GatewayService().refund(externalId)
+    await new GatewayService().refund(informations.externalId)
 
     response.ok('Purchase refund')
   }
