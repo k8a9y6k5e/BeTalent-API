@@ -6,6 +6,7 @@ export class Gateway1Adapter implements GatewayAdapter {
   private async authenticate() {
     const response = await fetch('http://localhost:3001/login', {
       method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: 'dev@betalent.tech',
         token: 'FEC9BB078BF338F464F96B48089EB498',
@@ -22,7 +23,7 @@ export class Gateway1Adapter implements GatewayAdapter {
 
     const response = await fetch('http://localhost:3001/transactions', {
       method: 'POST',
-      headers: { Authorization: `Bearer ${this.token}` },
+      headers: { 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' },
       body: JSON.stringify({
         amount: data.amount,
         name: data.name,
@@ -34,7 +35,7 @@ export class Gateway1Adapter implements GatewayAdapter {
 
     if (!response.ok) throw new Error('Payment failed')
 
-    const result = (await response.json()) as { id: number; status: string }
+    const result = (await response.json()) as { id: string; status: string }
 
     return {
       externalId: result.id,
@@ -45,10 +46,12 @@ export class Gateway1Adapter implements GatewayAdapter {
   async refund(externalId: string) {
     await this.authenticate()
 
-    await fetch(`http://localhost:3001/transactions/${externalId}/charge_back`, {
+    const response = await fetch(`http://localhost:3001/transactions/${externalId}/charge_back`, {
       method: 'POST',
-      headers: { Authorization: `Bearer ${this.token}` },
+      headers: { 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' },
     })
+
+    if (!response.ok) throw new Error('Refund failed')
   }
 
   async list() {
@@ -56,8 +59,10 @@ export class Gateway1Adapter implements GatewayAdapter {
 
     const response = await fetch('http://localhost:3001/transactions', {
       method: 'GET',
-      headers: { Authorization: `Bearer ${this.token}` },
+      headers: { 'Authorization': `Bearer ${this.token}`, 'Content-Type': 'application/json' },
     })
+
+    if (!response.ok) throw new Error('List failed')
 
     return await response.json()
   }

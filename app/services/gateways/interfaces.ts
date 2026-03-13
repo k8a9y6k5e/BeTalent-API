@@ -8,11 +8,11 @@ export interface ChargeData {
   amount: number
   name: string
   email: string
-  cardNumber: number
-  cvv: number
+  cardNumber: string
+  cvv: string
 }
 
 export interface ChargeResult {
-  externalId: number
+  externalId: string
   status: string
 }

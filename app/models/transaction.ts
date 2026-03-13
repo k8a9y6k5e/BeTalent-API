@@ -23,7 +23,7 @@ export default class Transaction extends TransactionSchema {
   declare gateway: HasMany<typeof Gateway>
 
   @column()
-  declare externalId: number | null
+  declare externalId: string | null
 
   @column()
   declare status: string | null

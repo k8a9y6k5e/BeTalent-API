@@ -13,7 +13,7 @@ export default class extends BaseSchema {
         .references('id')
         .inTable('gateways')
         .onDelete('CASCADE')
-      table.integer('external_id')
+      table.string('external_id')
       table.string('status')
       table.integer('amount')
       table.integer('card_last_numbers')

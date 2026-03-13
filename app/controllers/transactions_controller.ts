@@ -8,8 +8,42 @@ import { paginationValidator } from '#validators/pagination'
 import { paramValidator } from '#validators/id'
 
 export default class TransactionsController {
+  private cardValidation(cardNumber: string, cvv: string) {
+    if (cardNumber.length !== 16 || cvv.length !== 3)
+      throw new Error('Invalid card informations format')
+  }
+
+  private async getInformations(
+    clientId: number,
+    productId: number
+  ): Promise<{ amount: number; name: string; email: string }> {
+    const { name } = await Client.query()
+      .where('id', clientId)
+      .select('name')
+      .pojo<{ name: string }>()
+      .firstOrFail()
+    const { email } = await Client.query()
+      .where('id', clientId)
+      .select('email')
+      .pojo<{ email: string }>()
+      .firstOrFail()
+    const { amount } = await Product.query()
+      .where('id', productId)
+      .select('amount')
+      .pojo<{ amount: number }>()
+      .firstOrFail()
+
+    return {
+      amount: amount,
+      name: name,
+      email: email,
+    }
+  }
+
   public async createTransaction({ request, response }: HttpContext) {
     const data = await request.validateUsing(transactionValidator)
+
+    this.cardValidation(data.cardNumber, data.cvv)
 
     if (!(await Product.query().where('id', data.productId)))
       response.badRequest("Product entered doesn't exist")
@@ -17,28 +51,28 @@ export default class TransactionsController {
     if (!(await Client.query().where('id', data.clientId)))
       response.badRequest("Client entered doesn't exist")
 
-    const amount = Number(
-      await Product.query().where('id', data.productId).select('amount').firstOrFail()
-    )
+    const informations = await this.getInformations(data.clientId, data.productId)
 
     const cardLastNumbers: number = Number(data.cardNumber.toString().slice(-4))
 
     const chargeData = {
-      name: String(await Client.query().where('id', data.clientId).select('name').firstOrFail()),
-      amount: amount * data.quantity,
-      email: String(await Client.query().where('id', data.clientId).select('email').firstOrFail()),
+      name: informations.name,
+      amount: informations.amount * data.quantity,
+      email: informations.email,
       cardNumber: data.cardNumber,
       cvv: data.cvv,
     }
 
-    const gatewayResult = await new GatewayService().charge(chargeData)
+    const gatewayService = new GatewayService()
+
+    const gatewayResult = await gatewayService.charge(chargeData)
 
     await Transaction.create({
       clientId: data.clientId,
       gatewayId: gatewayResult.gatewayId,
       externalId: gatewayResult.externalId,
       status: gatewayResult.status,
-      amount: amount,
+      amount: informations.amount,
       cardLastNumbers: cardLastNumbers,
       productId: data.productId,
       quantity: data.quantity,
