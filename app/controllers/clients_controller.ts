@@ -8,6 +8,9 @@ export default class ClientsController {
   public async createClient({ request, response }: HttpContext) {
     const data = await request.validateUsing(clientValidator)
 
+    if (await Client.query().where('email', data.email).first())
+      throw new Error('Email used already exist')
+
     await Client.create(data)
 
     response.created(data)
