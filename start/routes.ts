@@ -40,6 +40,6 @@ router
   .group(() => {
     router.get('/purchases', [controllers.Transactions, 'showTransactions'])
     router.get('/purchases/:id', [controllers.Transactions, 'detailedTransaction'])
-    router.post('/purchases/:id/refunc', [controllers.Transactions, 'refundTransaction'])
+    router.post('/purchases/:id/refund', [controllers.Transactions, 'refundTransaction'])
   })
   .use(middleware.auth())

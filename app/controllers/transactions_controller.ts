@@ -122,6 +122,8 @@ export default class TransactionsController {
       .pojo<{ externalId: string }>()
       .firstOrFail()
 
+    await Transaction.query().where('id', id).update({ status: 'refunded' })
+
     await new GatewayService().refund(informations.externalId)
 
     response.ok('Purchase refund')

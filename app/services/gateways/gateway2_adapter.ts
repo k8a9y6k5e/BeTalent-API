@@ -31,11 +31,13 @@ export class Gateway2Adapter implements GatewayAdapter {
   }
 
   async refund(externalId: string): Promise<void> {
-    await fetch('http://localhost:3002/transacoes/reembolso', {
+    const response = await fetch('http://localhost:3002/transacoes/reembolso', {
       method: 'POST',
       headers: this.headers,
       body: JSON.stringify({ id: externalId }),
     })
+
+    if (Object.keys(response).includes('erros')) throw new Error('Refund failed')
   }
 
   async list() {
@@ -43,6 +45,8 @@ export class Gateway2Adapter implements GatewayAdapter {
       method: 'GET',
       headers: this.headers,
     })
+
+    if (Object.keys(response).includes('erros')) throw new Error('List failed')
 
     return await response.json()
   }
