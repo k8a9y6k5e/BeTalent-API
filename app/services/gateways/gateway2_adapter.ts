@@ -20,13 +20,13 @@ export class Gateway2Adapter implements GatewayAdapter {
       }),
     })
 
-    if (!response.ok) throw new Error('Payment failed')
+    const result = (await response.json()) as { id: string }
 
-    const result = (await response.json()) as { id: string; status: string }
+    if (Object.keys(result).includes('erros')) throw new Error('Payment failed')
 
     return {
       externalId: result.id,
-      status: result.status,
+      status: 'paid',
     }
   }
 

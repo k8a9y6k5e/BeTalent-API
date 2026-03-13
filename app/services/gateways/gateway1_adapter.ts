@@ -35,11 +35,11 @@ export class Gateway1Adapter implements GatewayAdapter {
 
     if (!response.ok) throw new Error('Payment failed')
 
-    const result = (await response.json()) as { id: string; status: string }
+    const result = (await response.json()) as { id: string }
 
     return {
       externalId: result.id,
-      status: result.status,
+      status: 'paid',
     }
   }
 
