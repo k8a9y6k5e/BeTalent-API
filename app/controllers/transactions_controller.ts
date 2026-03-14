@@ -8,7 +8,7 @@ import { paginationValidator } from '#validators/pagination'
 import { paramValidator } from '#validators/id'
 
 export default class TransactionsController {
-  private cardValidation(cardNumber: string, cvv: string) {
+  private cardFormatValidator(cardNumber: string, cvv: string) {
     if (cardNumber.length !== 16 || cvv.length !== 3)
       throw new Error('Invalid card informations format')
   }
@@ -43,8 +43,9 @@ export default class TransactionsController {
   public async createTransaction({ request, response }: HttpContext) {
     const data = await request.validateUsing(transactionValidator)
 
-    this.cardValidation(data.cardNumber, data.cvv)
+    this.cardFormatValidator(data.cardNumber, data.cvv)
 
+    //verify if id informates exist
     if (!(await Product.query().where('id', data.productId)))
       response.badRequest("Product entered doesn't exist")
 
@@ -52,8 +53,6 @@ export default class TransactionsController {
       response.badRequest("Client entered doesn't exist")
 
     const informations = await this.getInformations(data.clientId, data.productId)
-
-    const cardLastNumbers: number = Number(data.cardNumber.toString().slice(-4))
 
     const chargeData = {
       name: informations.name,
@@ -66,6 +65,8 @@ export default class TransactionsController {
     const gatewayService = new GatewayService()
 
     const gatewayResult = await gatewayService.charge(chargeData)
+
+    const cardLastNumbers: number = Number(data.cardNumber.toString().slice(-4))
 
     await Transaction.create({
       clientId: data.clientId,
@@ -116,15 +117,16 @@ export default class TransactionsController {
   public async refundTransaction({ params, response }: HttpContext) {
     const { id } = await paramValidator.validate(params)
 
+    //get an object with the value externalId
     const informations = await Transaction.query()
       .where('id', id)
       .select('externalId')
       .pojo<{ externalId: string }>()
       .firstOrFail()
 
-    await Transaction.query().where('id', id).update({ status: 'refunded' })
-
     await new GatewayService().refund(informations.externalId)
+
+    await Transaction.query().where('id', id).update({ status: 'refunded' })
 
     response.ok('Purchase refund')
   }

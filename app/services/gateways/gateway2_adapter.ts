@@ -2,6 +2,7 @@ import type { ChargeData, ChargeResult, GatewayAdapter } from './interfaces.ts'
 
 export class Gateway2Adapter implements GatewayAdapter {
   private headers = {
+    //using pre-defined values
     'Gateway-Auth-Token': 'tk_f2198cc671b5289fa856',
     'Gateway-Auth-Secret': '3d15e8ed6131446ea7e3456728b1211f',
     'Content-Type': 'application/json',

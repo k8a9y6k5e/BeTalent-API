@@ -8,12 +8,13 @@ export class Gateway1Adapter implements GatewayAdapter {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
+        //using pre-defined-values
         email: 'dev@betalent.tech',
         token: 'FEC9BB078BF338F464F96B48089EB498',
       }),
     })
 
-    const data = (await response.json()) as { token: string }
+    const data = (await response.json()) as { token: string } //to get the token
 
     this.token = data.token
   }

@@ -10,7 +10,6 @@ router.post('/login', [controllers.Users, 'login'])
 router.post('/purchases', [controllers.Transactions, 'createTransaction'])
 
 //for private routers
-
 // - gateways
 router
   .group(() => {

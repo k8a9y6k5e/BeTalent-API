@@ -6,6 +6,7 @@ export default class UsersController {
   public async login({ request, auth, response }: HttpContext) {
     const data = await request.validateUsing(loginValidator)
 
+    //verify if the user already exist, if not exist create the user
     if (!(await User.query().select().where({ email: data.email }).first())) {
       await User.create(data)
     }
@@ -15,6 +16,7 @@ export default class UsersController {
       .where('token', data.token)
       .firstOrFail()
 
+    //verify if user not exist
     if (!user) {
       return { error: 'Invalid values/credentials' }
     }

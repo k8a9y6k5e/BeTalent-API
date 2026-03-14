@@ -9,6 +9,7 @@ export default class GatewaysController {
 
     const data = await request.validateUsing(gatewaysValidator)
 
+    //verify if any value needed unexist
     if (
       data.isActive === undefined ||
       data.priority === undefined ||
@@ -18,6 +19,7 @@ export default class GatewaysController {
       return response.badRequest("Importants values to update doesn't exist")
     }
 
+    //create a variable to update the informations
     const gateway = await Gateways.findOrFail(id)
 
     gateway.isActive = data.isActive!
@@ -53,6 +55,7 @@ export default class GatewaysController {
 async function _swapPriority(priority: number, toUpdate: Gateways) {
   const samePriority = await Gateways.findBy({ priority: priority })
 
+  //if exist a value with same priority swap both priorities
   if (samePriority) {
     samePriority.priority = toUpdate.priority
     await samePriority.save()

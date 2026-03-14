@@ -15,6 +15,9 @@ const cvv = () =>
     .min(1)
     .transform((value) => String(value))
 
+//transform is used because the functions which use cvv and cardNumber require a string
+//but to validate need to confirm it's a number
+
 export const transactionValidator = vine.compile(
   vine.object({
     clientId: clientId(),
