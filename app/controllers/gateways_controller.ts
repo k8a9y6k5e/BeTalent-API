@@ -28,7 +28,7 @@ export default class GatewaysController {
 
     await gateway.save()
 
-    return response.ok({ gateway })
+    return response.ok('Updated')
   }
 
   public async patchUpdate({ request, response, params }: HttpContext) {
@@ -48,7 +48,7 @@ export default class GatewaysController {
 
     await gateway.save()
 
-    return response.ok({ gateway })
+    return response.ok('Updated')
   }
 }
 

@@ -13,7 +13,7 @@ export default class ClientsController {
 
     await Client.create(data)
 
-    response.created(data)
+    response.created('Client created')
   }
 
   public async showClients({ request, response }: HttpContext) {

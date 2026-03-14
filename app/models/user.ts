@@ -18,9 +18,6 @@ export default class User extends compose(UserSchema, AuthFinder) {
   @column()
   declare email: string
 
-  @column()
-  declare token: string
-
   @column({ serializeAs: null })
   declare password: string
 

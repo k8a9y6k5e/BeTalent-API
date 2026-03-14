@@ -8,18 +8,7 @@ import { BaseModel, column } from '@adonisjs/lucid/orm'
 import { DateTime } from 'luxon'
 
 export class AuthAccessTokenSchema extends BaseModel {
-  static $columns = [
-    'abilities',
-    'createdAt',
-    'expiresAt',
-    'hash',
-    'id',
-    'lastUsedAt',
-    'name',
-    'tokenableId',
-    'type',
-    'updatedAt',
-  ] as const
+  static $columns = ['abilities', 'createdAt', 'expiresAt', 'hash', 'id', 'lastUsedAt', 'name', 'tokenableId', 'type', 'updatedAt'] as const
   $columns = AuthAccessTokenSchema.$columns
   @column()
   declare abilities: string
@@ -91,19 +80,7 @@ export class ProductSchema extends BaseModel {
 }
 
 export class TransactionSchema extends BaseModel {
-  static $columns = [
-    'amount',
-    'cardLastNumbers',
-    'clientId',
-    'createdAt',
-    'externalId',
-    'gatewayId',
-    'id',
-    'productId',
-    'quantity',
-    'status',
-    'updatedAt',
-  ] as const
+  static $columns = ['amount', 'cardLastNumbers', 'clientId', 'createdAt', 'externalId', 'gatewayId', 'id', 'productId', 'quantity', 'status', 'updatedAt'] as const
   $columns = TransactionSchema.$columns
   @column()
   declare amount: number | null
@@ -130,7 +107,7 @@ export class TransactionSchema extends BaseModel {
 }
 
 export class UserSchema extends BaseModel {
-  static $columns = ['createdAt', 'email', 'id', 'password', 'role', 'token', 'updatedAt'] as const
+  static $columns = ['createdAt', 'email', 'id', 'password', 'role', 'updatedAt'] as const
   $columns = UserSchema.$columns
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime | null
@@ -142,8 +119,6 @@ export class UserSchema extends BaseModel {
   declare password: string
   @column()
   declare role: string | null
-  @column()
-  declare token: string
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
 }

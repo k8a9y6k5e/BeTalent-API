@@ -11,10 +11,7 @@ export default class UsersController {
       await User.create(data)
     }
 
-    const user = await User.query()
-      .where('email', data.email)
-      .where('token', data.token)
-      .firstOrFail()
+    const user = await User.query().where('email', data.email).firstOrFail()
 
     //verify if user not exist
     if (!user) {

@@ -7,7 +7,6 @@ export default class extends BaseSchema {
     this.schema.createTable(this.tableName, (table) => {
       table.increments('id')
       table.string('email').notNullable().unique()
-      table.string('token').notNullable().unique()
       table.string('password').notNullable()
       table.enum('role', ['admin', 'manager', 'finance', 'user'])
 
