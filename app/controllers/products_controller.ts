@@ -8,6 +8,9 @@ export default class ProductsController {
 
     data.amount *= 100 //to transform the value in R$ to cents
 
+    if (await Product.query().where('name', data.name).first())
+      throw new Error('Product already exist')
+
     await Product.create(data)
 
     response.created(data)
